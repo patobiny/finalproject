@@ -2,6 +2,8 @@
 import json
 from flask import Flask, Response
 from helloworld.flaskrun import flaskrun
+import requests
+from flask_cors import CORS
 import boto3
 
 application = Flask(__name__)
@@ -31,6 +33,16 @@ def detect_labels(bucket, key, max_labels=3, min_confidence=90, region="us-east-
 		MinConfidence=min_confidence,
     )
     return json.dumps(response['Labels'])
-
+    
+@application.route('/upload_image', methods=['POST'])
+def uploadImage():
+    mybucket = 'yakov-my-upload-bucket-01'
+    filobject = request.files['img']
+    s3 = boto3.resource('s3', region_name='us-east-1')
+    date_time = datetime.now()
+    dt_string = date_time.strftime("%d-%m-%Y-%H-%M-%S")
+    filename = "%s.jpg" % dt_string
+    s3.Bucket(mybucket).upload_fileobj(filobject, filename, ExtraArgs={'ACL': 'public-read', 'ContentType': 'image/jpeg'})
+    return {"imgName": filename}
 if __name__ == '__main__':
     flaskrun(application)

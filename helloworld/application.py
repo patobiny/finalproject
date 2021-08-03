@@ -49,5 +49,5 @@ if __name__ == '__main__':
 
 
 '''
-curl -i -X POST localhost:5000/upload_image -H "Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryPYhU8Zq24DhSBxcR" --data-binary "@/home/ec2-user/environment/finalproject/helloworld/football.jpg"
+curl -i -X POST localhost:5000/upload_image -H "Content-Type: text/plain" --data-binary "@/home/ec2-user/environment/finalproject/helloworld/football.jpg"
 '''

@@ -37,7 +37,7 @@ def detect_labels(bucket, key, max_labels=3, min_confidence=90, region="us-east-
 @application.route('/upload_image', methods=['POST'])
 def uploadImage():
     mybucket = 'yakov-my-upload-bucket-01'
-    filobject = request.files['img']
+    filobject = request.files['file']
     s3 = boto3.resource('s3', region_name='us-east-1')
     date_time = datetime.now()
     dt_string = date_time.strftime("%d-%m-%Y-%H-%M-%S")
@@ -46,3 +46,8 @@ def uploadImage():
     return {"imgName": filename}
 if __name__ == '__main__':
     flaskrun(application)
+
+
+'''
+curl -i -X POST localhost:5000/upload_image -H "Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryPYhU8Zq24DhSBxcR" --data-binary "@/home/ec2-user/environment/finalproject/helloworld/football.jpg"
+'''

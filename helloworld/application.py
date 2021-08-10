@@ -6,7 +6,9 @@ import requests
 from flask_cors import CORS
 import boto3
 from datetime import datetime
+
 application = Flask(__name__)
+CORS(application, resources={r"/*": {"origins": "*"}})
 
 @application.route('/', methods=['GET'])
 def get():
